@@ -16,12 +16,8 @@ import matplotlib.pyplot as plt
 
 from FruitVAE import FruitVAE # import the model
 
-print(os.listdir("/storage/fruits/fruits-360_dataset/fruits-360/Training"))
-
-ROOT_DIR = "/storage/fruits/fruits-360/fruits-360_dataset/fruits-360"
-TRAINING_DIR = os.path.join(ROOT_DIR, "Training")
-TEST_DIR = os.path.join(ROOT_DIR, "Test")
-
+TRAINING_DIR = "/storage/fruits/fruits-360_dataset/fruits-360/Training"
+TEST_DIR = "/storage/fruits/fruits-360_dataset/fruits-360/Test"
 ############################ LOAD THE DATA ##################################################
 
 """
