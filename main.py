@@ -63,7 +63,7 @@ for epoch in range(20):
     sgd.step()
 
   for x, _ in tqdm(testloader):
-    with torch.zero_grad():
+    with torch.no_grad():
       x = x.cuda().float()
       x_pred, mu, logvar = vae.forward(x)
       test_loss = loss_function(x_pred, x, mu, logvar)
