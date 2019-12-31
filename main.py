@@ -47,7 +47,7 @@ def loss_function(x_pred, x, mu, logvar):
   return mse + kl
 
 vae = FruitVAE().cuda()
-sgd = optim.SGD(vae.parameters(), lr=1e-3, momentum=0.9)
+sgd = optim.Adam(vae.parameters(), lr=1e-3)
 
 ########################## TRAIN THE MODEL #########################################################################################
 
@@ -81,6 +81,6 @@ for epoch in range(20):
     img = vae.decode(sample).detach().cpu().numpy()[0]
     img = np.moveaxis(img, 0, -1)
     plt.imshow(img)
-    plt.savefig("/storage/fruit-generated-images/epoch-{}.png".format(epoch+1))
+    plt.savefig("/artifacts/epoch-{}.png".format(epoch+1))
 
 torch.save(vae.state_dict(), "/artifacts/model-weights.pth")
