@@ -81,6 +81,6 @@ for epoch in range(20):
     img = vae.decode(sample).detach().cpu().numpy()[0]
     img = np.moveaxis(img, 0, -1)
     plt.imshow(img)
-    plt.show()
+    plt.savefig("/storage/fruit-generated-images/epoch-{}.png".format(epoch+1))
 
 torch.save(vae.state_dict(), "/artifacts/model-weights.pth")
