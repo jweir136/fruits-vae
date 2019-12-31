@@ -14,8 +14,9 @@ class FruitVAE(nn.Module):
   def __init__(self):
     super().__init__()
 
+    self.drop = nn.Dropout2d(p=0.2, inplace=True)
+
     self.encoder = nn.Sequential(
-      nn.Dropout2d(p=0.1, inplace=True),
       nn.Conv2d(3, 8, kernel_size=5),
       nn.ReLU(True),
       nn.Conv2d(8, 16, kernel_size=5),
@@ -51,7 +52,9 @@ class FruitVAE(nn.Module):
     epsilon = torch.rand_like(std)
     return mu + std * epsilon
 
-  def encode(self, x):
+  def encode(self, x, training=False):
+    if training:
+      x = self.drop(x)
     x = self.encoder(x)
     mu, logvar = self.mu_layer(x), self.logvar_layer(x)
     return mu, logvar
@@ -59,7 +62,9 @@ class FruitVAE(nn.Module):
   def decode(self, x):
     return self.decoder(x)
 
-  def forward(self, x):
+  def forward(self, x, training=False):
+    if training:
+      x = self.drop(x)
     mu, logvar = self.encode(x)
     z = self.reparam_(mu, logvar)
     return self.decode(z), mu, logvar

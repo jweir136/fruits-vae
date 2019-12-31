@@ -56,7 +56,7 @@ for epoch in range(20):
     x = x.cuda().float()
     sgd.zero_grad()
 
-    x_pred, mu, logvar = vae.forward(x)
+    x_pred, mu, logvar = vae.forward(x, training=True)
     train_loss = loss_function(x_pred, x, mu, logvar)
 
     train_loss.backward()
@@ -65,7 +65,7 @@ for epoch in range(20):
   for x, _ in tqdm(testloader):
     with torch.no_grad():
       x = x.cuda().float()
-      x_pred, mu, logvar = vae.forward(x)
+      x_pred, mu, logvar = vae.forward(x, training=False)
       test_loss = loss_function(x_pred, x, mu, logvar)
 
   print("\n")
